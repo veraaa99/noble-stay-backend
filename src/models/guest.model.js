@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const guestSchema = new mongoose.Schema({
+    _id: Object,
     category: { type: String, required: true },
     number: { type: Number, required: true }
 }, { autoCreate: false })
