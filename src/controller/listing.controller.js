@@ -8,29 +8,25 @@ export const createCastleListing = asyncHandler(async (req, res) => {
 })
 
 export const getCastleListings = asyncHandler(async (req, res) => {
-    const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
+    const {  } = req.body
 
-    // console.log({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
-    res.status(201).json({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
+    res.status(201).json({  })
 })
 
 export const getCastleListing = asyncHandler(async (req, res) => {
-    const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
+   const {  } = req.body
 
-    // console.log({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
-    res.status(201).json({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
+    res.status(201).json({  })
 })
 
 export const updateCastleListing = asyncHandler(async (req, res) => {
-    const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
+    const {  } = req.body
 
-    // console.log({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
-    res.status(201).json({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
+    res.status(201).json({  })
 })
 
 export const deleteCastleListing = asyncHandler(async (req, res) => {
-    const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
+    const {  } = req.body
 
-    // console.log({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
-    res.status(201).json({ title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events })
+    res.status(201).json({  })
 })
