@@ -1,20 +1,16 @@
 import express from 'express'
-import Listing from '../models/listing.model.js'
-import { createCastleListing } from '../controller/listing.controller.js'
+import { createCastleListing, deleteCastleListing, getCastleListing, getCastleListings, updateCastleListing } from '../controller/listing.controller.js'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    res.send('All castle listings')
-})
-
 router.post('/', createCastleListing)
 
-router.get('/', () => {})
-router.get('/*id', () => {})
+router.get('/', getCastleListings)
+router.get('/:id', getCastleListing)
 
-router.put('/*id', () => {})
+router.put('/:id', updateCastleListing)
+router.patch('/:id', updateCastleListing)
 
-router.delete('/*id', () => {})
+router.delete('/:id', deleteCastleListing)
 
 export default router
