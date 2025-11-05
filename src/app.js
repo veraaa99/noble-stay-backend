@@ -9,7 +9,7 @@ app.use(express.json())
 
 // TODO: Install CORS
 // app.use(cors())
-// app.use(express.json({ limit: '16MB', extended: false }));
+app.use(express.json({ limit: '16MB', extended: false }));
 
 app.use('/api/listings', listingRoutes)
 app.use('/api/users', userRoutes)
