@@ -7,6 +7,6 @@ const router = express.Router()
 router.post('/', createBooking)
 
 router.get('/', getBookings)
-router.get('/confirmed', getBooking)
+router.get('/confirmed/:id', getBooking)
 
 export default router
