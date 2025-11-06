@@ -1,10 +1,11 @@
 import express from 'express'
-import { createCastleListing, deleteCastleListing, getCastleListing, getCastleListings, updateCastleListing } from '../controller/listing.controller.js'
+import { createCastleListing, deleteCastleListing, getCastleListing, getCastleListings, getCastleListingsByFilter, updateCastleListing } from '../controller/listing.controller.js'
 
 const router = express.Router()
 
 router.post('/', createCastleListing)
 
+router.get('/search', getCastleListingsByFilter)
 router.get('/', getCastleListings)
 router.get('/:id', getCastleListing)
 

@@ -77,7 +77,7 @@ export const getBookings = asyncHandler(async (req, res) => {
 })
 
 export const getBooking = asyncHandler(async (req, res) => {
-    const { bookingId } = useParams()
+    const { bookingId } = req.params
 
     if(!bookingId) {
         return res.status(404).json({ message: 'Error: No bookingId found' })

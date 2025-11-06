@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import CastleListing from '../models/listing.model.js'
+import mongoose from 'mongoose'
 
 export const createCastleListing = asyncHandler(async (req, res) => {
     const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
@@ -21,23 +22,23 @@ export const createCastleListing = asyncHandler(async (req, res) => {
     if(description == '' || description == "") {
         return res.status(400).json({ message: "Please enter all required fields to create a listing" })
     }
-    if(rules.isEmpty()) {
+    if(rules == '' || rules == "") {
         return res.status(400).json({ message: "Please enter all required fields to create a listing" })
     }
-    if(dates.isEmpty()) {
+    if(dates == '' || dates == "") {
         return res.status(400).json({ message: "Please enter all required fields to create a listing" })
     }
-    if(guests.isEmpty()) {
+    if(guests == '' || guests == "") {
         return res.status(400).json({ message: "Please enter all required fields to create a listing" })
     }
-    if(rooms.isEmpty()) {
+    if(rooms == '' || rooms == "") {
         return res.status(400).json({ message: "Please enter all required fields to create a listing" })
     }
 
-    if(amneties.isEmpty()) {
+    if(amneties == '' || amneties == "") {
         amneties = undefined
     }
-    if(events.isEmpty()) {
+    if(events == '' || events == "") {
         events = undefined
     }
 
@@ -49,19 +50,50 @@ export const createCastleListing = asyncHandler(async (req, res) => {
 })
 
 export const getCastleListings = asyncHandler(async (req, res) => {
-    const listings = await CastleListing.find().exec()
+    const castleListings = await CastleListing.find().exec()
 
-    if(!listings) {
+    if(!castleListings) {
         return res.status(404).json({ message: 'No listings could be found' })
     }
 
-    res.status(200).json(listings)
+    res.status(200).json(castleListings)
 })
 
 export const getCastleListing = asyncHandler(async (req, res) => {
-   const {  } = req.body
+    const { id } = req.params
 
-    res.status(200).json({  })
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid id"})
+    }
+
+    const castleListing = await CastleListing.findById(id).exec()
+
+    if(!castleListing) {
+        return res.status(404).json({ message: 'Listing could not be found'})
+    }
+
+    res.status(200).json(castleListing)
+})
+
+export const getCastleListingsByFilter = asyncHandler(async (req, res) => {
+    const queryParams = new URLSearchParams(req.query);
+
+    const params = [queryParams.get('location'), queryParams.get('guests')]
+    const location = queryParams.getAll('location')
+
+
+    // if(!mongoose.Types.ObjectId.isValid(id)) {
+    //     return res.status(400).json({ message: "Invalid id"})
+    // }
+
+    // const castleListing = await CastleListing.findById(id).exec()
+
+    // if(!castleListing) {
+    //     return res.status(404).json({ message: 'Listing could not be found'})
+    // }
+    // const castleListings = await CastleListing.find().exec()
+
+    res.status(200).json(params)
 })
 
 export const updateCastleListing = asyncHandler(async (req, res) => {
