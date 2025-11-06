@@ -52,8 +52,9 @@ export const loginUser = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials' })
     }
 
-    // const userToken = generateToken(user)
-    res.status(200).json({_id: user._id, email: user.email})
+    const userToken = generateToken(user)
+
+    res.status(200).json({_id: user._id, email: user.email, userToken: userToken })
 })
 
 export const getUsers = asyncHandler(async (req, res) => {
@@ -100,4 +101,11 @@ export const getUserByToken = asyncHandler(async (req, res) => {
     }
 
     res.status(200).json(user)
+})
+
+export const checkToken = asyncHandler(async (req, res) => {
+    res.status(200).json({
+        _id: req.user._id,
+        name: req.user.email
+    })
 })
