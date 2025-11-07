@@ -1,6 +1,6 @@
+import mongoose from 'mongoose'
 import asyncHandler from 'express-async-handler'
 import CastleListing from '../models/listing.model.js'
-import mongoose from 'mongoose'
 
 export const createCastleListing = asyncHandler(async (req, res) => {
     const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
@@ -43,7 +43,7 @@ export const createCastleListing = asyncHandler(async (req, res) => {
     }
 
     const castleListing = await CastleListing.create(
-        { title, images, location, description, amneties, rules, dates, guests, rooms, user, isEventAvaliable, events }
+        { title, images, location, description, amneties, rules, dates, guests, rooms, castleOwner: user, isEventAvaliable, events }
     )
 
     res.status(201).json(castleListing)

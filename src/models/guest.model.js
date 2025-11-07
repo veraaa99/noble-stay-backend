@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const guestSchema = new mongoose.Schema({
-    _id: Object,
+    // castle: { type: mongoose.Schema.Types.ObjectId, ref: 'CastleListing', required: true, default: undefined },
     category: { type: String, required: true },
     number: { type: Number, required: true }
-}, { autoCreate: false })
+}, )
 
 const Guest = mongoose.model('Guest', guestSchema)
 

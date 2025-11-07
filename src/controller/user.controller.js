@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler'
-import User from '../models/user.model.js'
 import mongoose from 'mongoose'
+import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import { generateToken } from '../token/webTokenGenerating.js'
 
@@ -22,7 +22,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: 'A user with this email address already exists' })
     }
 
-    const salt = await bcrypt.genSalt(18)
+    const salt = await bcrypt.genSalt(15)
     const newHashedPassword = await bcrypt.hash(password, salt)
 
     const user = await User.create({ email: email, phone: phone, password: newHashedPassword })

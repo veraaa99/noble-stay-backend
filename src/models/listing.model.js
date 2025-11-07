@@ -17,6 +17,6 @@ const listingSchema = new mongoose.Schema({
     events: { type:  [String] }
 })
 
-const CastleListing = mongoose.model('CastleListings', listingSchema)
+const CastleListing = mongoose.model('CastleListing', listingSchema)
 
 export default CastleListing
