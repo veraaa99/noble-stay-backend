@@ -6,7 +6,7 @@ export const createCastleListing = asyncHandler(async (req, res) => {
     const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body
     const user = req.user._id
 
-    if(!title || !images || !location || !description || !rules || !dates || !guests || !rooms || !isEventAvaliable) {
+    if(!title || !images || !location || !description || !rules || !dates || !guests || !rooms || isEventAvaliable == undefined) {
         return res.status(400).json({ message: "Please enter all required fields to create a listing" })
     }
 
@@ -161,10 +161,10 @@ export const getCastleListingsByFilter = asyncHandler(async (req, res) => {
                         return
                     }
                 }
-            
-            return listing
-            
+
             }
+
+            return listing
 
         })
     }
@@ -174,10 +174,19 @@ export const getCastleListingsByFilter = asyncHandler(async (req, res) => {
 
 export const updateCastleListing = asyncHandler(async (req, res) => {
     const { id } = req.params
+    const user = req.user._id
     const { title, images, location, description, amneties, rules, dates, guests, rooms, isEventAvaliable, events } = req.body 
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ message: "Invalid id"})
+    }
+
+    const castleListing = await CastleListing.findById(id).exec()
+
+    if(!castleListing) {
+        return res.status(404).json({ message: 'Listing could not be found' })
+    } else if (castleListing.castleOwner._id.toHexString() !== user) {
+        return res.status(401).json({ message: 'You are not authenticated. The listing can only be updated by the castle owner.' })
     }
 
     const valuesToUpdate = {}
@@ -231,14 +240,23 @@ export const updateCastleListing = asyncHandler(async (req, res) => {
 
 export const deleteCastleListing = asyncHandler(async (req, res) => {
     const { id } = req.params
+    const user = req.user._id
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ message: "Invalid id"})
     }
 
-    const castleListing = await CastleListing.findByIdAndDelete(id).exec()
+    const castleListing = await CastleListing.findById(id).exec()
 
     if(!castleListing) {
+        return res.status(404).json({ message: 'Listing could not be found' })
+    } else if (castleListing.castleOwner._id.toHexString() !== user) {
+        return res.status(401).json({ message: 'You are not authenticated. The listing can only be removed by the castle owner.' })
+    }
+
+    const deletedCastleListing = await CastleListing.findByIdAndDelete(id).exec()
+
+    if(!deletedCastleListing) {
         return res.status(404).json({ message: 'Listing could not be found' })
     }
 
