@@ -5,13 +5,13 @@ import bcrypt from 'bcryptjs'
 import { generateToken } from '../token/webTokenGenerating.js'
 
 export const registerUser = asyncHandler(async (req, res) => {
-    const { email, phone, password, repeatedPassword } = req.body
+    const { email, phone, password, confirmPassword } = req.body
 
-    if(!email || !phone || !password || !repeatedPassword) {
+    if(!email || !phone || !password || !confirmPassword) {
         return res.status(400).json({ message: 'Please enter an email address, a phone number, a password and repeat the password to register a new user'})
     }
 
-    if(repeatedPassword !== password) {
+    if(confirmPassword !== password) {
         return res.status(400).json({ message: 'Passwords do not match'})
     }
 
@@ -54,7 +54,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
     const userToken = generateToken(user)
 
-    res.status(200).json({_id: user._id, email: user.email, userToken: userToken })
+    res.status(200).json({_id: user._id, email: user.email, phone: user.phone, userToken: userToken })
 })
 
 export const getUsers = asyncHandler(async (req, res) => {
@@ -106,6 +106,6 @@ export const getUserByToken = asyncHandler(async (req, res) => {
 export const checkToken = asyncHandler(async (req, res) => {
     res.status(200).json({
         _id: req.user._id,
-        name: req.user.email
+        email: req.user.email    
     })
 })
